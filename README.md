@@ -58,10 +58,10 @@ make
 sudo ./secret
 ```
 
-Then run physical_reader, providing it with the standard system memory offset (0xffff888000000000), and the memory address from running secret. 
+Then run physical_reader, providing it with the direct physical memory mapping address (0xffff888000000000), and the memory address from running secret. 
 This program attempts to read the data contained at the given memory location. Since it is isolated to a seperate process, this should not be possible, however it uses Meltdown to extract it through the CPU cache, bypassing normal protections. 
 ```bash
-./physical_reader 0xffff888000000000 [MEMORY_ADDRESS_FROM_SECRET]
+./physical_reader [MEMORY_ADDRESS_FROM_SECRET] 0xffff888000000000 
 ```
 
 Note: Since physical_reader is reliant on CPU side-channels to extract data, it is highly sensitive to other processes on the system. This can cause it to read corrupted data. This is an inherent limitation to the exploit, which is normally avoided by simply running the exploit multiple times until it successfully extracts the target data. 
